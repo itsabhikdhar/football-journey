@@ -16,8 +16,8 @@ public class TripService {
     private final TripRepository tripRepository;
     private final ExpenseRepository expenseRepository;
 
-    public TripSummaryDto getTripSummary(Long tripId) {
-        Trip trip = tripRepository.findById(tripId)
+    public TripSummaryDto getTripSummary(Long tripId, String userEmail) {
+        Trip trip = tripRepository.findByIdAndUserEmail(tripId, userEmail)
                 .orElseThrow(() -> new RuntimeException("Trip not found"));
         List<Expense> expenses = expenseRepository.findByTripId(tripId);
 

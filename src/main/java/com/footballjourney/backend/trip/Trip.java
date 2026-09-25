@@ -1,5 +1,6 @@
 package com.footballjourney.backend.trip;
 
+import com.footballjourney.backend.auth.User;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.cglib.core.Local;
@@ -17,6 +18,10 @@ public class Trip {
 
     @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @Column(nullable = false)
     private String name;
