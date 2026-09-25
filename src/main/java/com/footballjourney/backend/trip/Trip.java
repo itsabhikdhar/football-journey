@@ -1,5 +1,6 @@
 package com.footballjourney.backend.trip;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.footballjourney.backend.auth.User;
 import jakarta.persistence.*;
 import lombok.*;
@@ -21,6 +22,7 @@ public class Trip {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
+    @JsonIgnore
     private User user;
 
     @Column(nullable = false)
