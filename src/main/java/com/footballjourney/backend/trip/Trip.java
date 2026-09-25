@@ -5,7 +5,6 @@ import com.footballjourney.backend.auth.User;
 import com.footballjourney.backend.expense.Expense;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.cglib.core.Local;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
