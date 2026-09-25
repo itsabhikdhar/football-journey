@@ -1,5 +1,6 @@
 package com.footballjourney.backend.expense;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.footballjourney.backend.trip.Trip;
 import jakarta.persistence.*;
 import lombok.*;
@@ -20,6 +21,7 @@ public class Expense {
 
     @ManyToOne
     @JoinColumn(name = "trip_id", nullable = false)
+    @JsonIgnore
     private Trip trip;
 
     @Column(nullable = false)

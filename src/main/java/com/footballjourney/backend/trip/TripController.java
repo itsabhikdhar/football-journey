@@ -35,4 +35,9 @@ public class TripController {
     public ResponseEntity<List<Trip>> getAllTrips(Principal principal) {
         return ResponseEntity.ok(tripService.getAllTrips(principal.getName()));
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Trip> getTripById(@PathVariable Long id, Principal principal) {
+        return ResponseEntity.ok(tripService.getTripById(id, principal.getName()));
+    }
 }

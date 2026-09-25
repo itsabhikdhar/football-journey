@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -80,5 +81,15 @@ public class TripService {
 
     public List<Trip> getAllTrips(String userEmail) {
         return tripRepository.findByUserEmail(userEmail);
+    }
+
+    public Trip getTripById(Long id, String userEmail) {
+        Trip trip = tripRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Trip not found"));
+
+        if (!trip.getUser().getEmail().equals(userEmail)) {
+            throw new RuntimeException("Not authorized to view this trip");
+        }
+        return trip;
     }
 }

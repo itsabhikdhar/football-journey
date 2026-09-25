@@ -2,12 +2,15 @@ package com.footballjourney.backend.trip;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.footballjourney.backend.auth.User;
+import com.footballjourney.backend.expense.Expense;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.cglib.core.Local;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "trips")
@@ -36,4 +39,7 @@ public class Trip {
 
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal budget;
+
+    @OneToMany(mappedBy = "trip", cascade = CascadeType.ALL)
+    private List<Expense> expenses = new ArrayList<>();
 }
