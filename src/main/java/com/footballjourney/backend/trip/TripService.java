@@ -1,7 +1,9 @@
 package com.footballjourney.backend.trip;
 
+import com.footballjourney.backend.auth.UserRepository;
 import com.footballjourney.backend.expense.Expense;
 import com.footballjourney.backend.expense.ExpenseRepository;
+import com.footballjourney.backend.expense.ExpenseRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,7 @@ public class TripService {
 
     private final TripRepository tripRepository;
     private final ExpenseRepository expenseRepository;
+    private final UserRepository userRepository;
 
     public TripSummaryDto getTripSummary(Long tripId, String userEmail) {
         Trip trip = tripRepository.findByIdAndUserEmail(tripId, userEmail)
@@ -45,4 +48,33 @@ public class TripService {
         );
     }
 
+    public Trip createTrip(TripRequest request, String userEmail) {
+        var user = userRepository.findByEmail(userEmail)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        var trip = Trip.builder()
+                .name(request.name())
+                .startDate(request.startDate())
+                .endDate(request.endDate())
+                .budget(request.budget())
+                .user(user)
+                .build();
+
+        return tripRepository.save(trip);
+    }
+
+    public Expense addExpense(Long tripId, ExpenseRequest request, String userEmail) {
+        var trip = tripRepository.findByIdAndUserEmail(tripId, userEmail)
+                .orElseThrow(() -> new RuntimeException("Trip not found or access denied"));
+
+        var expense = Expense.builder()
+                .trip(trip)
+                .category(request.category())
+                .description(request.description())
+                .amount(request.amount())
+                .expenseDate(request.expenseDate())
+                .build();
+
+        return expenseRepository.save(expense);
+    }
 }
