@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/trips")
@@ -28,5 +29,10 @@ public class TripController {
     @PostMapping("/{tripId}/expenses")
     public ResponseEntity<Expense> addExpense(@PathVariable Long tripId, @RequestBody ExpenseRequest request, Principal principal) {
         return ResponseEntity.ok(tripService.addExpense(tripId, request, principal.getName()));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Trip>> getAllTrips(Principal principal) {
+        return ResponseEntity.ok(tripService.getAllTrips(principal.getName()));
     }
 }

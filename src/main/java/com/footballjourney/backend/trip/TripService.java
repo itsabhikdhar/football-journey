@@ -77,4 +77,8 @@ public class TripService {
 
         return expenseRepository.save(expense);
     }
+
+    public List<Trip> getAllTrips(String userEmail) {
+        return tripRepository.findByUserEmail(userEmail);
+    }
 }
